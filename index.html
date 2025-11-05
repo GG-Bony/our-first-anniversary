@@ -3,9 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>我们的像素绘本</title>
-<!-- 引入 jQuery 和 Turn.js -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/blasten/turn.js@4/turn.min.js"></script>
+<script src="jquery-3.6.0.min.js"></script>
+<script src="turn.js"></script>
 <style>
 body {
   margin:0;
@@ -17,22 +16,19 @@ body {
   overflow:hidden;
   font-family:sans-serif;
 }
-
 #book {
   width:90vw;
   max-width:1600px;
   aspect-ratio:16/9;
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  box-shadow:0 0 20px rgba(0,0,0,0.3);
   background:#fff;
 }
-
 #book .page img {
   width:100%;
   height:100%;
   object-fit:contain;
   display:block;
 }
-
 button {
   position:absolute;
   top:50%;
@@ -66,15 +62,11 @@ button {
 </head>
 <body>
 
-<!-- 音乐，不自动播放 -->
 <audio id="bgm" src="music.mp3" loop></audio>
 <button id="audio-control">播放音乐</button>
-
-<!-- 翻页按钮 -->
 <button id="prev">⬅ 上一页</button>
 <button id="next">下一页 ➡</button>
 
-<!-- 电子书容器 -->
 <div id="book">
   <div class="page"><img src="第一个.jpg"></div>
   <div class="page"><img src="第二个.jpg"></div>
@@ -100,34 +92,29 @@ button {
 
 <script>
 $(window).on('load', function() {
-  // 初始化 Turn.js，但不自动翻页
+  // 初始化 Turn.js
   $("#book").turn({
     width: $("#book").width(),
     height: $("#book").height(),
-    autoCenter: true,
-    duration: 1000
+    autoCenter:true,
+    duration:1000
   });
 
-  // 按钮翻页
+  // 翻页按钮
   $("#next").click(function(){ $("#book").turn("next"); });
   $("#prev").click(function(){ $("#book").turn("previous"); });
 
   // 键盘翻页
   $(document).keydown(function(e){
-    if(e.key === "ArrowRight") $("#book").turn("next");
-    if(e.key === "ArrowLeft") $("#book").turn("previous");
+    if(e.key==="ArrowRight") $("#book").turn("next");
+    if(e.key==="ArrowLeft") $("#book").turn("previous");
   });
 
-  // 音乐播放/暂停按钮
+  // 音乐按钮
   const bgm = document.getElementById('bgm');
   $("#audio-control").click(function(){
-    if(bgm.paused){ 
-      bgm.play(); 
-      $(this).text("暂停音乐"); 
-    } else { 
-      bgm.pause(); 
-      $(this).text("播放音乐"); 
-    }
+    if(bgm.paused){ bgm.play(); $(this).text("暂停音乐"); }
+    else { bgm.pause(); $(this).text("播放音乐"); }
   });
 });
 </script>
