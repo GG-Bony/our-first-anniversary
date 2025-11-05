@@ -133,7 +133,7 @@ $(function(){
 
   function initBook(){
     const bookWidth = $book.width();
-    const bookHeight = Math.round(bookWidth * 16 / 9); // 竖屏 9:16
+    const bookHeight = Math.round(bookWidth * 16 / 9); // 保持竖屏比例，和 CSS aspect-ratio 匹配
 
     $book.turn({
       width: bookWidth,
@@ -153,27 +153,21 @@ $(function(){
       if(e.key === "ArrowLeft") $book.turn("previous");
     });
 
-    // 音乐控制，只触发一次
-    $("#audio-control").one('click', async function(){
+    // 音乐控制
+    $("#audio-control").off('click').on('click', async function(){
       try {
-        await bgm.play();
-        $(this).text("暂停音乐");
-        $musicTip.fadeOut(500);
-      } catch(err){
-        console.log("播放失败:", err);
-        alert("浏览器阻止了播放，请再次点击播放按钮");
-      }
-
-      // 切换暂停/播放
-      $(this).off('click').on('click', async function(){
         if(bgm.paused){
           await bgm.play();
           $(this).text("暂停音乐");
+          $musicTip.fadeOut(500);
         } else {
           bgm.pause();
           $(this).text("播放音乐");
         }
-      });
+      } catch(err){
+        console.log("播放失败:", err);
+        alert("浏览器阻止了播放，请再次点击播放按钮");
+      }
     });
 
     // 窗口缩放时更新 Turn.js 尺寸
