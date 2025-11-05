@@ -3,149 +3,123 @@
 <head>
 <meta charset="UTF-8">
 <title>我们的像素绘本</title>
-<!-- 本地 jQuery 和 Turn.js -->
 <script src="jquery-3.6.0.min.js"></script>
 <script src="turn.js"></script>
 <style>
 body {
-  margin: 0;
-  background: #fefefe;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  overflow: hidden;
-  font-family: sans-serif;
+  margin:0;
+  background:#fefefe;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  overflow:hidden;
+  font-family:sans-serif;
 }
-
-/* 竖屏 9:16 容器 */
 #book {
-  width: 90vw;
-  max-width: 500px;      /* 竖屏适配宽度 */
-  aspect-ratio: 9/16;    /* 竖屏比例 */
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
-  background: #fff;
+  width:90vw;
+  max-width:500px;
+  aspect-ratio:9/16;
+  box-shadow:0 0 20px rgba(0,0,0,0.3);
+  background:#fff;
 }
-
 #book .page img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;   /* 保持像素风比例 */
-  display: block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
 }
-
-/* 翻页按钮 */
 button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0,0,0,0.5);
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  font-size: 20px;
-  cursor: pointer;
-  border-radius: 6px;
-  z-index: 10;
-  user-select: none;
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(0,0,0,0.5);
+  color:white;
+  border:none;
+  padding:12px 24px;
+  font-size:20px;
+  cursor:pointer;
+  border-radius:6px;
+  z-index:10;
+  user-select:none;
 }
-#prev { left: 20px; }
-#next { right: 20px; }
-
-/* 音乐控制按钮 */
+#prev { left:20px; }
+#next { right:20px; }
 #audio-control {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0,0,0,0.5);
-  color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  z-index: 10;
+  position:absolute;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(0,0,0,0.5);
+  color:white;
+  padding:8px 16px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  z-index:10;
 }
 </style>
 </head>
 <body>
 
-<!-- 音乐 -->
 <audio id="bgm" src="music.mp3" loop></audio>
 <button id="audio-control">播放音乐</button>
-
-<!-- 翻页按钮 -->
 <button id="prev">⬅ 上一页</button>
 <button id="next">下一页 ➡</button>
 
-<!-- 电子书容器 -->
 <div id="book">
   <div class="page"><img src="第一个.jpg"></div>
   <div class="page"><img src="第二个.jpg"></div>
   <div class="page"><img src="第三个.jpg"></div>
   <div class="page"><img src="第四个.jpg"></div>
   <div class="page"><img src="第五个.jpg"></div>
-  <div class="page"><img src="第六个.jpg"></div>
-  <div class="page"><img src="第七个.jpg"></div>
-  <div class="page"><img src="第八个.jpg"></div>
-  <div class="page"><img src="第九个.jpg"></div>
-  <div class="page"><img src="第十个.jpg"></div>
-  <div class="page"><img src="第十一个.jpg"></div>
-  <div class="page"><img src="第十二个.jpg"></div>
-  <div class="page"><img src="第十三个.jpg"></div>
-  <div class="page"><img src="第十四个.jpg"></div>
-  <div class="page"><img src="第十五个.jpg"></div>
-  <div class="page"><img src="第十六个.jpg"></div>
-  <div class="page"><img src="第十七个.jpg"></div>
-  <div class="page"><img src="第十八个.jpg"></div>
-  <div class="page"><img src="第十九个.jpg"></div>
-  <div class="page"><img src="第二十个.jpg"></div>
 </div>
 
 <script>
-$(window).on('load', function() {
-  // 等待所有图片加载完成再初始化 Turn.js
-  let imagesLoaded = 0;
-  const totalImages = $("#book .page img").length;
-
-  $("#book .page img").each(function(){
-    $(this).on('load', function(){
-      imagesLoaded++;
-      if(imagesLoaded === totalImages){
-        // 初始化 Turn.js
-        $("#book").turn({
-          width: $("#book").width(),
-          height: $("#book").height(),
-          autoCenter: true,
-          duration: 1000
-        });
-      }
-    }).each(function() {
-      if(this.complete) $(this).trigger('load'); // 处理缓存图片
-    });
-  });
-
-  // 翻页按钮
-  $("#next").click(function(){ $("#book").turn("next"); });
-  $("#prev").click(function(){ $("#book").turn("previous"); });
-
-  // 键盘翻页
-  $(document).keydown(function(e){
-    if(e.key === "ArrowRight") $("#book").turn("next");
-    if(e.key === "ArrowLeft") $("#book").turn("previous");
-  });
-
-  // 音乐按钮控制
+$(function(){
+  const $book = $("#book");
   const bgm = document.getElementById('bgm');
-  $("#audio-control").click(function(){
-    if(bgm.paused){ 
-      bgm.play(); 
-      $(this).text("暂停音乐"); 
-    } else { 
-      bgm.pause(); 
-      $(this).text("播放音乐"); 
-    }
+
+  // 等待所有图片加载完成
+  const images = $book.find("img");
+  let loadedCount = 0;
+  images.each(function(){
+    $(this).on('load', function(){
+      loadedCount++;
+      if(loadedCount === images.length) initBook();
+    }).each(function(){ if(this.complete) $(this).trigger('load'); });
   });
+
+  function initBook(){
+    // 初始化 Turn.js
+    $book.turn({
+      width: $book.width(),
+      height: $book.height(),
+      autoCenter: true,
+      duration: 600
+    });
+
+    // 翻页按钮
+    $("#next").off('click').on('click', ()=> $book.turn("next"));
+    $("#prev").off('click').on('click', ()=> $book.turn("previous"));
+
+    // 键盘翻页
+    $(document).off('keydown').on('keydown', function(e){
+      if(e.key === "ArrowRight") $book.turn("next");
+      if(e.key === "ArrowLeft") $book.turn("previous");
+    });
+
+    // 音乐控制
+    $("#audio-control").off('click').on('click', function(){
+      if(bgm.paused){
+        bgm.play();
+        $(this).text("暂停音乐");
+      } else {
+        bgm.pause();
+        $(this).text("播放音乐");
+      }
+    });
+  }
 });
 </script>
 
