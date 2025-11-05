@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>竖屏像素绘本</title>
-<script src="jquery-3.6.0.min.js"></script>
-<script src="turn.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/blasten/turn.js/turn.min.js"></script>
 <style>
 body {
   margin:0;
@@ -62,11 +62,15 @@ button {
 </head>
 <body>
 
+<!-- 音乐 -->
 <audio id="bgm" src="music.mp3" loop></audio>
 <button id="audio-control">播放音乐</button>
+
+<!-- 翻页按钮 -->
 <button id="prev">⬅ 上一页</button>
 <button id="next">下一页 ➡</button>
 
+<!-- 电子书容器 -->
 <div id="book">
   <div class="page"><img src="第一个.jpg"></div>
   <div class="page"><img src="第二个.jpg"></div>
@@ -98,23 +102,26 @@ $(function(){
   // 等待所有图片加载完成
   const images = $book.find("img");
   let loaded = 0;
+
   images.each(function(){
     $(this).on('load', function(){
       loaded++;
       if(loaded === images.length){
-        initBook(); // 所有图片加载完再初始化
+        initBook(); // 所有图片加载完再初始化 Turn.js
       }
     }).each(function(){ if(this.complete) $(this).trigger('load'); });
   });
 
   function initBook(){
     const bookWidth = $book.width();
-    const bookHeight = bookWidth * 16 / 9; // 竖屏 9:16
+    const bookHeight = Math.round(bookWidth * 16 / 9); // 竖屏 9:16
+
     $book.turn({
       width: bookWidth,
       height: bookHeight,
       autoCenter: true,
-      duration: 600
+      duration: 600,
+      display: "single"  // 单页模式
     });
 
     // 翻页按钮
@@ -141,7 +148,7 @@ $(function(){
     // 窗口缩放时更新 Turn.js 尺寸
     $(window).on('resize', function(){
       const newWidth = $book.width();
-      const newHeight = newWidth * 16 / 9;
+      const newHeight = Math.round(newWidth * 16 / 9);
       $book.turn("size", newWidth, newHeight);
     });
   }
