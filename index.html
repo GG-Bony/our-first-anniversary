@@ -80,8 +80,8 @@ button {
 </head>
 <body>
 
-<!-- 音乐 -->
-<audio id="bgm" src="https://cdn.jsdelivr.net/gh/gg-bony/our-first-anniversary@main/music.mp3" preload="auto" loop></audio>
+<!-- 音乐（相对路径） -->
+<audio id="bgm" src="music.mp3" preload="auto" loop></audio>
 <button id="audio-control">播放音乐</button>
 <div id="music-tip">点击按钮播放音乐 🎵</div>
 
@@ -91,26 +91,26 @@ button {
 
 <!-- 电子书容器 -->
 <div id="book">
-  <div class="page"><img src="https://cdn.jsdelivr.net/gh/gg-bony/our-first-anniversary@main/第一个.jpg"></div>
-  <div class="page"><img src="https://cdn.jsdelivr.net/gh/gg-bony/our-first-anniversary@main/第二个.jpg"></div>
-  <div class="page"><img src="https://cdn.jsdelivr.net/gh/gg-bony/our-first-anniversary@main/第三个.jpg"></div>
-  <div class="page"><img src="https://cdn.jsdelivr.net/gh/gg-bony/our-first-anniversary@main/第四个.jpg"></div>
-  <div class="page"><img src="https://cdn.jsdelivr.net/gh/gg-bony/our-first-anniversary@main/第五个.jpg"></div>
-  <div class="page"><img src="https://cdn.jsdelivr.net/gh/gg-bony/our-first-anniversary@main/第六个.jpg"></div>
-  <div class="page"><img src="https://cdn.jsdelivr.net/gh/gg-bony/our-first-anniversary@main/第七个.jpg"></div>
-  <div class="page"><img src="https://cdn.jsdelivr.net/gh/gg-bony/our-first-anniversary@main/第八个.jpg"></div>
-  <div class="page"><img src="https://cdn.jsdelivr.net/gh/gg-bony/our-first-anniversary@main/第九个.jpg"></div>
-  <div class="page"><img src="https://cdn.jsdelivr.net/gh/gg-bony/our-first-anniversary@main/第十个.jpg"></div>
-  <div class="page"><img src="https://cdn.jsdelivr.net/gh/gg-bony/our-first-anniversary@main/第十一个.jpg"></div>
-  <div class="page"><img src="https://cdn.jsdelivr.net/gh/gg-bony/our-first-anniversary@main/第十二个.jpg"></div>
-  <div class="page"><img src="https://cdn.jsdelivr.net/gh/gg-bony/our-first-anniversary@main/第十三个.jpg"></div>
-  <div class="page"><img src="https://cdn.jsdelivr.net/gh/gg-bony/our-first-anniversary@main/第十四个.jpg"></div>
-  <div class="page"><img src="https://cdn.jsdelivr.net/gh/gg-bony/our-first-anniversary@main/第十五个.jpg"></div>
-  <div class="page"><img src="https://cdn.jsdelivr.net/gh/gg-bony/our-first-anniversary@main/第十六个.jpg"></div>
-  <div class="page"><img src="https://cdn.jsdelivr.net/gh/gg-bony/our-first-anniversary@main/第十七个.jpg"></div>
-  <div class="page"><img src="https://cdn.jsdelivr.net/gh/gg-bony/our-first-anniversary@main/第十八个.jpg"></div>
-  <div class="page"><img src="https://cdn.jsdelivr.net/gh/gg-bony/our-first-anniversary@main/第十九个.jpg"></div>
-  <div class="page"><img src="https://cdn.jsdelivr.net/gh/gg-bony/our-first-anniversary@main/第二十个.jpg"></div>
+  <div class="page"><img src="第一个.jpg"></div>
+  <div class="page"><img src="第二个.jpg"></div>
+  <div class="page"><img src="第三个.jpg"></div>
+  <div class="page"><img src="第四个.jpg"></div>
+  <div class="page"><img src="第五个.jpg"></div>
+  <div class="page"><img src="第六个.jpg"></div>
+  <div class="page"><img src="第七个.jpg"></div>
+  <div class="page"><img src="第八个.jpg"></div>
+  <div class="page"><img src="第九个.jpg"></div>
+  <div class="page"><img src="第十个.jpg"></div>
+  <div class="page"><img src="第十一个.jpg"></div>
+  <div class="page"><img src="第十二个.jpg"></div>
+  <div class="page"><img src="第十三个.jpg"></div>
+  <div class="page"><img src="第十四个.jpg"></div>
+  <div class="page"><img src="第十五个.jpg"></div>
+  <div class="page"><img src="第十六个.jpg"></div>
+  <div class="page"><img src="第十七个.jpg"></div>
+  <div class="page"><img src="第十八个.jpg"></div>
+  <div class="page"><img src="第十九个.jpg"></div>
+  <div class="page"><img src="第二十个.jpg"></div>
 </div>
 
 <script>
@@ -133,7 +133,7 @@ $(function(){
 
   function initBook(){
     const bookWidth = $book.width();
-    const bookHeight = Math.round(bookWidth * 16 / 9); // 保持竖屏比例，和 CSS aspect-ratio 匹配
+    const bookHeight = Math.round(bookWidth * 16 / 9);
 
     $book.turn({
       width: bookWidth,
@@ -182,4 +182,3 @@ $(function(){
 
 </body>
 </html>
-
