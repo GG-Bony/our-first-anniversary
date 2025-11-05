@@ -29,7 +29,7 @@ body {
 #book .page img {
   width:100%;
   height:100%;
-  object-fit:contain; /* 保持16:9比例 */
+  object-fit:contain;
   display:block;
 }
 
@@ -66,13 +66,16 @@ button {
 </head>
 <body>
 
-<audio id="bgm" src="music.mp3" autoplay loop></audio>
-<button id="audio-control">暂停音乐</button>
+<!-- 音乐，不自动播放 -->
+<audio id="bgm" src="music.mp3" loop></audio>
+<button id="audio-control">播放音乐</button>
+
+<!-- 翻页按钮 -->
 <button id="prev">⬅ 上一页</button>
 <button id="next">下一页 ➡</button>
 
+<!-- 电子书容器 -->
 <div id="book">
-  <!-- 20 页图片 -->
   <div class="page"><img src="第一个.jpg"></div>
   <div class="page"><img src="第二个.jpg"></div>
   <div class="page"><img src="第三个.jpg"></div>
@@ -96,14 +99,13 @@ button {
 </div>
 
 <script>
-$(document).ready(function() {
-  // 初始化 Turn.js
+$(window).on('load', function() {
+  // 初始化 Turn.js，但不自动翻页
   $("#book").turn({
     width: $("#book").width(),
     height: $("#book").height(),
     autoCenter: true,
-    duration: 1000, // 翻页时间
-    acceleration: true
+    duration: 1000
   });
 
   // 按钮翻页
@@ -116,11 +118,16 @@ $(document).ready(function() {
     if(e.key === "ArrowLeft") $("#book").turn("previous");
   });
 
-  // 音乐播放/暂停
+  // 音乐播放/暂停按钮
   const bgm = document.getElementById('bgm');
   $("#audio-control").click(function(){
-    if(bgm.paused){ bgm.play(); $(this).text("暂停音乐"); }
-    else { bgm.pause(); $(this).text("播放音乐"); }
+    if(bgm.paused){ 
+      bgm.play(); 
+      $(this).text("暂停音乐"); 
+    } else { 
+      bgm.pause(); 
+      $(this).text("播放音乐"); 
+    }
   });
 });
 </script>
