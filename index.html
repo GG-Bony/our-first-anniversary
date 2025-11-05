@@ -16,6 +16,8 @@ body {
   overflow:hidden;
   font-family:sans-serif;
 }
+
+/* 电子书容器 */
 #book {
   width:90vw;
   max-width:500px;
@@ -29,6 +31,8 @@ body {
   object-fit:contain;
   display:block;
 }
+
+/* 翻页按钮 */
 button {
   position:absolute;
   top:50%;
@@ -45,18 +49,19 @@ button {
 }
 #prev { left:20px; }
 #next { right:20px; }
+
+/* 音乐按钮固定右上角，不遮挡图片 */
 #audio-control {
-  position:absolute;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
+  position: fixed;
+  top:10px;
+  right:10px;
   background:rgba(0,0,0,0.5);
   color:white;
   padding:8px 16px;
   border:none;
   border-radius:6px;
   cursor:pointer;
-  z-index:10;
+  z-index:20;
 }
 </style>
 </head>
@@ -137,7 +142,7 @@ $(function(){
     // 音乐控制
     $("#audio-control").off('click').on('click', function(){
       if(bgm.paused){
-        bgm.play();
+        bgm.play().catch(err => console.log(err)); // 防止浏览器阻止自动播放报错
         $(this).text("暂停音乐");
       } else {
         bgm.pause();
