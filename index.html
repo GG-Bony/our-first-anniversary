@@ -80,8 +80,12 @@ button {
 </head>
 <body>
 
-<!-- 音乐（相对路径） -->
-<audio id="bgm" src="music.mp3" preload="auto" loop></audio>
+<!-- 音乐 -->
+<audio id="bgm" preload="auto" loop>
+  <source src="music.mp3" type="audio/mpeg">
+  <source src="music2.ogg" type="audio/ogg">
+  您的浏览器不支持音频播放
+</audio>
 <button id="audio-control">播放音乐</button>
 <div id="music-tip">点击按钮播放音乐 🎵</div>
 
