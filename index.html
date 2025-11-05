@@ -92,7 +92,7 @@ button {
 
 <script>
 $(window).on('load', function() {
-  // 初始化 Turn.js
+  // 初始化 Turn.js，确保所有图片加载完成
   $("#book").turn({
     width: $("#book").width(),
     height: $("#book").height(),
@@ -113,8 +113,13 @@ $(window).on('load', function() {
   // 音乐按钮
   const bgm = document.getElementById('bgm');
   $("#audio-control").click(function(){
-    if(bgm.paused){ bgm.play(); $(this).text("暂停音乐"); }
-    else { bgm.pause(); $(this).text("播放音乐"); }
+    if(bgm.paused){ 
+      bgm.play(); 
+      $(this).text("暂停音乐"); 
+    } else { 
+      bgm.pause(); 
+      $(this).text("播放音乐"); 
+    }
   });
 });
 </script>
