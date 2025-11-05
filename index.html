@@ -8,56 +8,63 @@
 <script src="turn.js"></script>
 <style>
 body {
-  margin:0;
-  background:#fefefe;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  overflow:hidden;
-  font-family:sans-serif;
+  margin: 0;
+  background: #fefefe;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  font-family: sans-serif;
 }
+
+/* 竖屏 9:16 容器 */
 #book {
-  width:90vw;
-  max-width:1600px;
-  aspect-ratio:16/9;
-  box-shadow:0 0 20px rgba(0,0,0,0.3);
-  background:#fff;
+  width: 90vw;
+  max-width: 500px;      /* 竖屏适配宽度 */
+  aspect-ratio: 9/16;    /* 竖屏比例 */
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  background: #fff;
 }
+
 #book .page img {
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  display:block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;   /* 保持像素风比例 */
+  display: block;
 }
+
+/* 翻页按钮 */
 button {
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  background:rgba(0,0,0,0.5);
-  color:white;
-  border:none;
-  padding:12px 24px;
-  font-size:20px;
-  cursor:pointer;
-  border-radius:6px;
-  z-index:10;
-  user-select:none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 6px;
+  z-index: 10;
+  user-select: none;
 }
-#prev { left:20px; }
-#next { right:20px; }
+#prev { left: 20px; }
+#next { right: 20px; }
+
+/* 音乐控制按钮 */
 #audio-control {
-  position:absolute;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
-  background:rgba(0,0,0,0.5);
-  color:white;
-  padding:8px 16px;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
-  z-index:10;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.5);
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 10;
 }
 </style>
 </head>
@@ -97,12 +104,25 @@ button {
 
 <script>
 $(window).on('load', function() {
-  // 初始化 Turn.js，确保图片加载完成
-  $("#book").turn({
-    width: $("#book").width(),
-    height: $("#book").height(),
-    autoCenter: true,
-    duration: 1000
+  // 等待所有图片加载完成再初始化 Turn.js
+  let imagesLoaded = 0;
+  const totalImages = $("#book .page img").length;
+
+  $("#book .page img").each(function(){
+    $(this).on('load', function(){
+      imagesLoaded++;
+      if(imagesLoaded === totalImages){
+        // 初始化 Turn.js
+        $("#book").turn({
+          width: $("#book").width(),
+          height: $("#book").height(),
+          autoCenter: true,
+          duration: 1000
+        });
+      }
+    }).each(function() {
+      if(this.complete) $(this).trigger('load'); // 处理缓存图片
+    });
   });
 
   // 翻页按钮
