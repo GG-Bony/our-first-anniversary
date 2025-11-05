@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>我们的像素绘本</title>
+<title>竖屏像素绘本</title>
 <script src="jquery-3.6.0.min.js"></script>
 <script src="turn.js"></script>
 <style>
@@ -73,6 +73,21 @@ button {
   <div class="page"><img src="第三个.jpg"></div>
   <div class="page"><img src="第四个.jpg"></div>
   <div class="page"><img src="第五个.jpg"></div>
+  <div class="page"><img src="第六个.jpg"></div>
+  <div class="page"><img src="第七个.jpg"></div>
+  <div class="page"><img src="第八个.jpg"></div>
+  <div class="page"><img src="第九个.jpg"></div>
+  <div class="page"><img src="第十个.jpg"></div>
+  <div class="page"><img src="第十一个.jpg"></div>
+  <div class="page"><img src="第十二个.jpg"></div>
+  <div class="page"><img src="第十三个.jpg"></div>
+  <div class="page"><img src="第十四个.jpg"></div>
+  <div class="page"><img src="第十五个.jpg"></div>
+  <div class="page"><img src="第十六个.jpg"></div>
+  <div class="page"><img src="第十七个.jpg"></div>
+  <div class="page"><img src="第十八个.jpg"></div>
+  <div class="page"><img src="第十九个.jpg"></div>
+  <div class="page"><img src="第二十个.jpg"></div>
 </div>
 
 <script>
@@ -82,19 +97,22 @@ $(function(){
 
   // 等待所有图片加载完成
   const images = $book.find("img");
-  let loadedCount = 0;
+  let loaded = 0;
   images.each(function(){
     $(this).on('load', function(){
-      loadedCount++;
-      if(loadedCount === images.length) initBook();
+      loaded++;
+      if(loaded === images.length){
+        initBook(); // 所有图片加载完再初始化
+      }
     }).each(function(){ if(this.complete) $(this).trigger('load'); });
   });
 
   function initBook(){
-    // 初始化 Turn.js
+    const bookWidth = $book.width();
+    const bookHeight = bookWidth * 16 / 9; // 竖屏 9:16
     $book.turn({
-      width: $book.width(),
-      height: $book.height(),
+      width: bookWidth,
+      height: bookHeight,
       autoCenter: true,
       duration: 600
     });
@@ -118,6 +136,13 @@ $(function(){
         bgm.pause();
         $(this).text("播放音乐");
       }
+    });
+
+    // 窗口缩放时更新 Turn.js 尺寸
+    $(window).on('resize', function(){
+      const newWidth = $book.width();
+      const newHeight = newWidth * 16 / 9;
+      $book.turn("size", newWidth, newHeight);
     });
   }
 });
